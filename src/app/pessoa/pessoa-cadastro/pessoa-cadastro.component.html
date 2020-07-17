@@ -1,0 +1,91 @@
+<div class="container">
+  <form #pesCadForm="ngForm" (ngSubmit)="salvarPessoa(pesCadForm)">
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <h1>{{editando ? 'Edição de' : 'Cadastro'}} Pessoa</h1>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <label>Nome</label>
+        <input pInputText type="text" name="nome"  [(ngModel)]="pessoa.nome" #nome="ngModel" required="true" minlength="3">
+
+        <div *ngIf="nome.hasError('required') && nome.dirty || nome.touched && nome.hasError('required')">
+          <p-message severity="error" text="Informe um nome!"></p-message>
+        </div>
+
+        <div *ngIf="nome.hasError('minlength') && nome.dirty">
+          <p-message severity="error" text="Minimo de 3 caracteres"></p-message>
+        </div>
+      </div>
+
+      <div class="ui-g-12 ui-md-9 ui-fluid">
+        <label>Logradouro</label>
+        <input pInputText type="text" name="logradouro"  [(ngModel)]="pessoa.endereco.logradouro" #logradouro="ngModel" required="true">
+
+        <div *ngIf="logradouro.hasError('required') && logradouro.dirty || logradouro.touched && logradouro.hasError('required')">
+          <p-message severity="error" text="Informe um logradouro!"></p-message>
+        </div>
+      </div>
+
+      <div class="ui-g-12 ui-md-3 ui-fluid">
+        <label>Numero</label>
+        <input pInputText type="text" name="numero" [(ngModel)]="pessoa.endereco.numero" #numero="ngModel">
+      </div>
+
+      <div class="ui-g-12 ui-md-4 ui-fluid">
+        <label>Complemento</label>
+        <input pInputText type="text" name="complemento" [(ngModel)]="pessoa.endereco.complemento" #numero="ngModel">
+      </div>
+
+      <div class="ui-g-12 ui-md-4 ui-fluid">
+        <label>Bairro</label>
+        <input pInputText type="text" name="bairro" [(ngModel)]="pessoa.endereco.bairro" #bairro="ngModel" required="true">
+
+        <div *ngIf="bairro.hasError('required') && bairro.dirty || bairro.touched && bairro.hasError('required')">
+          <p-message severity="error" text="Informe o bairro!"></p-message>
+        </div>
+
+      </div>
+
+      <div class="ui-g-12 ui-md-4 ui-fluid">
+        <label>Cep</label>
+        <p-inputMask mask="99.999-999" name="cep" [(ngModel)]="pessoa.endereco.cep" #cep="ngModel" required="true"></p-inputMask>
+
+        <div *ngIf="cep.hasError('required') && cep.dirty || cep.touched && cep.hasError('required')">
+          <p-message severity="error" text="Informe o CEP!"></p-message>
+        </div>
+
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-fluid">
+        <label>Estado</label>
+        <input pInputText type="text" name="estado" [(ngModel)]="pessoa.endereco.estado" #estado="ngModel" required="true">
+
+        <div *ngIf="estado.hasError('required') && estado.dirty || estado.touched && estado.hasError('required')">
+          <p-message severity="error" text="Informe um estado!"></p-message>
+        </div>
+
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-fluid">
+        <label>Cidade</label>
+        <input pInputText type="text" name="cidade" [(ngModel)]="pessoa.endereco.cidade" #cidade="ngModel" required="true">
+
+        <div *ngIf="cidade.hasError('required') && cidade.dirty || cidade.touched && cidade.hasError('required')">
+        <p-message severity="error" text="Informe uma cidade!"></p-message>
+        </div>
+
+      </div>
+
+      <div class="ui-g-12">
+        <button pButton type="submit" label="Salvar" [disabled]="pesCadForm.invalid"></button>
+        <span class="espaco"></span>
+        <button pButton type="button" class="button-novo" label="Novo"
+          (click)="novo(pesCadForm)">
+        </button>
+        <span class="espaco"></span>
+        <a routerLink="/pessoas">Voltar para pesquisa</a>
+      </div>
+    </div>
+  </form>
+</div>

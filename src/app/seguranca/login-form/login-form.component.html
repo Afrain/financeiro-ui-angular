@@ -1,0 +1,36 @@
+<div class="container" style="max-width: 400px; margin: auto">
+
+  <form autocomplete="off" #f="ngForm">
+
+    <div class="ui-g ui-fluid">
+
+<!-- {{ auth.jwtPayload | json }} -->
+
+      <div class="ui-g-12">
+        <h1>ACESSO</h1>
+      </div>
+
+      <div class="ui-g-12">
+        <span class="ui-float-label">
+          <input pInputText id="float-input" type="email" name="usuario"
+            ngModel required email #usuario>
+          <label for="float-input">E-mail</label>
+        </span>
+      </div>
+
+      <div class="ui-g-12">
+        <span class="ui-float-label">
+          <input pInputText id="float-input2" type="password" name="senha"
+            ngModel required #senha>
+          <label for="float-input2">Senha</label>
+        </span>
+      </div>
+
+      <div class="ui-g-12">
+        <button pButton type="submit" label="ENTRAR" [disabled]="f.invalid"
+          (click)="login(usuario.value, senha.value); senha.value='';"></button>
+      </div>
+
+    </div>
+  </form>
+</div>

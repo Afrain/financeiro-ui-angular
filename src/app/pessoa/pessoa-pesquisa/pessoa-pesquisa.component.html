@@ -1,0 +1,82 @@
+<div class="container">
+
+  <form autocomplete="off" (ngSubmit)="pesquisarPessoas()">
+
+    <div class="ui-g">
+
+      <div class="ui-g-12">
+        <h1>Pessoas</h1>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <label>Nome</label>
+        <input pInputText type="text" name="nome" [(ngModel)]="filtro.nome">
+      </div>
+
+      <div class="ui-g-6">
+        <button pButton type="submit" icon="fa fa-search" label="Pesquisar"></button>
+      </div>
+
+      <div class="ui-g-6">
+        <a pButton style="float: right;" icon="fa fa-plus" label="Nova Pessoa" routerLink="/pessoas/novo"></a>
+      </div>
+
+      <!-- TABELA PESSOAS -->
+      <div class="ui-g">
+        <div class="ui-g-12">
+          <p-table [value]="pessoas" [paginator]="true" [responsive]="true"
+            [lazy]="true" [rows]="filtro.itensPorPagina" [totalRecords]="totalRegistros"
+            (onLazyLoad)="aoMudarPagina($event)">
+            <ng-template pTemplate="header" let-pessoas>
+              <tr>
+                <th>Nome</th>
+                <th>Cidade</th>
+                <th>Estado</th>
+                <th>Status</th>
+                <th class="col-acao-th"></th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-pessoas>
+              <tr>
+                <td>
+                  <span class="ui-column-title">Nome</span>
+                  {{pessoas.nome}}
+                </td>
+                <td>
+                  <span class="ui-column-title">Cidade</span>
+                  {{pessoas.endereco.cidade}}
+                </td>
+                <td>
+                  <span class="ui-column-title">Estado</span>
+                  {{pessoas.endereco.estado}}
+                </td>
+                <td>
+                  <span class="ui-column-title">Status</span>
+                  <a href="javascript:;" [pTooltip]="pessoas.ativo ? 'Desativar' : 'Ativar'" tooltipPosition="top"
+                    (click)="mudarStatusPessoa(rowData)">
+                    {{pessoas.ativo ? 'Ativo' : 'Inativo'}}
+                  </a>
+                </td>
+                <td class="col-acao-td">
+                  <a pButton icon="fa fa-pencil" pTooltip="Editar" tooltipPosition="top"
+                    [routerLink]="['/pessoas', rowData.codigo]"></a>
+                    <span class="espaco"></span>
+                  <button pButton icon="fa fa-trash" pTooltip="Excluir" tooltipPosition="top"
+                    (click)="confirmaExclusao(rowData)" [disabled]="!auth.temPermissao('ROLE_REMOVER_PESSOA')"></button>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage" let-pessoas>
+              <tr>
+                  <td>
+                      Nada encontrado..
+                  </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </div>
+
+    </div>
+  </form>
+</div>

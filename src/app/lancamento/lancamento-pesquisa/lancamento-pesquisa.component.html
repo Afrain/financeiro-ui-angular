@@ -1,0 +1,95 @@
+<div class="container">
+
+  <form autocomplete="off" (ngSubmit)="pesquisar()">
+
+    <div class="ui-g">
+
+        <div class="ui-g-12">
+          <h1>Lançamentos</h1>
+        </div>
+
+        <div class="ui-g-12 ui-md-6 ui-lg-6 ui-fluid">
+          <label>Descrição</label>
+          <input pInputText type="text" name="descricao" [(ngModel)]="filtro.descricao">
+        </div>
+
+        <div class="ui-g-12 ui-md-6 ui-lg-6">
+          <label style="display: block">Vencimento</label>
+          <p-calendar dateFormat="dd/mm/yy" [showIcon]="true" [inputStyle]="{ width: '95px' }"
+            name="vencimentoInicio" [(ngModel)]="filtro.dataVencimentoInicio"></p-calendar>
+          <label> até </label>
+          <p-calendar dateFormat="dd/mm/yy" [showIcon]="true" [inputStyle]="{ width: '95px' }"
+            name="vencimentoFim" [(ngModel)]="filtro.dataVencimentoFim"></p-calendar>
+        </div>
+
+        <div class="ui-g-6 ui-lg-6">
+          <button pButton icon="fa fa-search" type="submit" label="Pesquisar" ></button>
+        </div>
+
+        <div class="ui-g-6 ui-lg-6">
+          <a pButton style="float: right;" icon="fa fa-plus" label="Lancamento" routerLink="/lancamentos/novo"></a>
+        </div>
+
+      <!-- TABELA LANCAMENTOS -->
+      <div class="ui-g">
+        <div class="ui-g-12">
+          <p-table  [value]="lancamentos" [responsive]="true"
+                    [paginator]="true" [rows]="filtro.itensPorPagina"
+                    [lazy]="true" [totalRecords]="totalRegistros"
+                    (onLazyLoad)="aoMudarPagina($event)">
+            <ng-template pTemplate="header" let-lancamentos>
+              <tr>
+                  <th>Pessoa</th>
+                  <th>Descrição</th>
+                  <th class="col-data-th">Vencimento</th>
+                  <th class="col-data-th">Pagamento</th>
+                  <th class="col-valor-th">Valor</th>
+                  <th class="col-acao-th"></th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-lancamentos>
+              <tr>
+                  <td>
+                    <span class="ui-column-title">Pessoa</span>
+                    {{lancamentos.pessoa}}
+                  </td>
+                  <td>
+                    <span class="ui-column-title">Descrição</span>
+                    {{lancamentos.descricao}}
+                  </td>
+                  <td class="col-data-td">
+                    <span class="ui-column-title">Vencimento</span>
+                    {{lancamentos.dataVencimento | date:'dd/MM/y'}}
+                  </td>
+                  <td class="col-data-td">
+                    <span class="ui-column-title">Pagamento</span>
+                    {{lancamentos.dataPagamento | date:'dd/MM/y'}}
+                  </td>
+                  <td class="col-valor-td" [style.color]="lancamentos.tipo === 'DESPESA' ?  'red' : 'blue'">
+                    <span class="ui-column-title">Valor</span>
+                    {{lancamentos.valor | currency: 'BRL' : 'symbol' : '1.2-2'}}
+                  </td>
+                  <td class="col-acao-td">
+                    <a pButton icon="fa fa-pencil" pTooltip="Editar" tooltipPosition="top"
+                    [routerLink]="['/lancamentos', rowData.codigo]"></a>
+                      <span class="espaco"></span>
+                    <button pButton icon="fa fa-trash" pTooltip="Excluir" tooltipPosition="top"
+                      (click)="confirmaExclusao(rowData)" [disabled]="!auth.temPermissao('ROLE_REMOVER_LANCAMENTO')"></button>
+                  </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage" let-lancamentos>
+              <tr>
+                <td>
+                    Nada encontrado...
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </div>
+
+    </div>
+  </form>
+</div>
+

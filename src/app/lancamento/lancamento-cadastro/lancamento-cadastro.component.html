@@ -1,0 +1,92 @@
+<div class="container">
+  <form #lancCadForm="ngForm" (ngSubmit)="salvarLancamento(lancCadForm)">
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <h1>{{ editando ? 'Edição de' : 'Novo' }} Lançamento</h1>
+      </div>
+
+      <div class="ui-g-12">
+        <p-selectButton name="tipo" [options]="tipos" #tipo
+          [(ngModel)]="lancamento.tipoLancamento"
+        ></p-selectButton>
+      </div>
+
+      <div class="ui-g-6 ui-md-3 ui-fluid">
+        <label>Vencimento</label>
+        <p-calendar dateFormat="dd/mm/yy" [showIcon]="true" [readonlyInput]="true" name="vencimento"
+          [(ngModel)]="lancamento.dataVencimento" #vencimento="ngModel" required="true">
+        </p-calendar>
+
+        <div *ngIf="vencimento.hasError('required') && vencimento.touched">
+          <p-message severity="error" text="Informe a data!"></p-message>
+        </div>
+      </div>
+
+      <div class="ui-g-6 ui-md-3 ui-fluid">
+        <label>{{ tipo.value == 'RECEITA' ? 'Recebimento' : 'Pagamento'}}</label>
+        <p-calendar dateFormat="dd/mm/yy" [showIcon]="true" [readonlyInput]="false" name="recebimento"
+          [(ngModel)]="lancamento.dataPagamento" #recebimento="ngModel" [touchUI]="true">
+        </p-calendar>
+      </div>
+
+      <div class="ui-g-12 ui-md-9 ui-fluid">
+        <label>Descrição</label>
+        <input pInputText type="text" name="descricao"
+        [(ngModel)]="lancamento.descricao" #descricao="ngModel"  required="true" minlength="5">
+
+        <div *ngIf="descricao.hasError('required') && descricao.dirty
+                      || descricao.touched && descricao.hasError('required')">
+          <p-message severity="error" text="Informe uma descrição!"></p-message>
+        </div>
+        <div *ngIf="descricao.hasError('minlength') && descricao.dirty">
+          <p-message severity="error" text="Minimo de 5 caracteres!"></p-message>
+        </div>
+      </div>
+
+      <div class="ui-g-12 ui-md-3 ui-fluid">
+        <label>Valor</label>
+          <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon">R$</span>
+            <input pInputText type="text" name="valor" [(ngModel)]="lancamento.valor" #valor="ngModel" required="true"
+            currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false }">
+          </div>
+          <div *ngIf="valor.hasError('required') && valor.touched">
+            <p-message severity="error" text="Informe o valor!"></p-message>
+          </div>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-fluid">
+        <label>Categoria</label>
+        <p-dropdown class="treta" [options]="categorias" [filter]="true" placeholder="Selecione"
+          name="categoria" [(ngModel)]="lancamento.categoria.codigo" #categoria="ngModel" required="true">
+        </p-dropdown>
+        <div *ngIf="categoria.hasError('required') && categoria.touched">
+          <p-message severity="error" text="Informe uma categoria!"></p-message>
+        </div>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-fluid">
+        <label>Pessoa</label>
+        <p-dropdown class="treta" [options]="pessoas" [filter]="true" placeholder="Selecione"
+          name="pessoa" [(ngModel)]="lancamento.pessoa.codigo" #pessoa="ngModel" required="true">
+        </p-dropdown>
+        <div *ngIf="pessoa.hasError('required') && pessoa.touched">
+          <p-message severity="error" text="Informe uma pessoa!"></p-message>
+        </div>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <label>Observação</label>
+        <textarea pInputText rows="3" name="observacao" [(ngModel)]="lancamento.observacao"></textarea>
+      </div>
+
+      <div class="ui-g-12">
+        <button pButton type="submit" label="Salvar" [disabled]="lancCadForm.invalid"></button>
+        <span class="espaco"></span>
+        <button pButton type="button" label="Novo" class="button-novo" (click)="novo(lancCadForm)"></button>
+        <span class="espaco"></span>
+        <a routerLink="/lancamentos">voltar a pesquisa</a>
+      </div>
+    </div>
+  </form>
+</div>

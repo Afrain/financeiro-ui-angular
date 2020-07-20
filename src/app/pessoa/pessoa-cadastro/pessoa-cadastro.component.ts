@@ -41,7 +41,7 @@ export class PessoaCadastroComponent implements OnInit {
     return Boolean (this.pessoa.codigo);
   }
 
-  salvarPessoa(form: FormControl) {
+  salvarPessoa(form: any) {
     if (this.editando) {
       this.editarPessoa(form);
     } else {

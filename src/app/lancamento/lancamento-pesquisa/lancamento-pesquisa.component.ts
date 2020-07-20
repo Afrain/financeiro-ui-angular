@@ -25,7 +25,7 @@ export class LancamentoPesquisaComponent implements OnInit {
 
   constructor(
     private lancamentoService: LancamentoService,
-    private auth: AuthService,
+    public auth: AuthService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private erroHandleService: ErroHandlerService,

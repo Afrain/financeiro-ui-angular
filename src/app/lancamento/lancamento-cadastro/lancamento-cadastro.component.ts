@@ -52,7 +52,7 @@ export class LancamentoCadastroComponent implements OnInit {
     return Boolean(this.lancamento.codigo);
   }
 
-  novo(form: FormControl) {
+  novo(form: any) {
     form.reset();
 
     setTimeout(function() {
@@ -62,7 +62,7 @@ export class LancamentoCadastroComponent implements OnInit {
     this.router.navigate(['lancamentos/novo']);
   }
 
-  salvarLancamento(form: FormControl) {
+  salvarLancamento(form: any) {
     if (this.editando) {
       this.atualizarLancamento(form);
     } else {
@@ -70,7 +70,7 @@ export class LancamentoCadastroComponent implements OnInit {
     }
   }
 
-  adcionarLancamento(form: FormControl) {
+  adcionarLancamento(form: any) {
     this.lancamentoService.salvarLancamento(this.lancamento)
       .subscribe(() => {
         this.messageService.add({
@@ -83,7 +83,7 @@ export class LancamentoCadastroComponent implements OnInit {
       });
   }
 
-  atualizarLancamento(form: FormControl) {
+  atualizarLancamento(form: any) {
     this.lancamentoService.editarLancamento(this.lancamento)
       .subscribe(response => {
        // this.lancamento = response;

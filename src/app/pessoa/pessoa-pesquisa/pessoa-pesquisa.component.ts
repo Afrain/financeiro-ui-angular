@@ -24,7 +24,7 @@ export class PessoaPesquisaComponent implements OnInit {
 
   constructor(private pessoaService: PessoaService,
               private messageService: MessageService,
-              private auth: AuthService,
+              public auth: AuthService,
               private erroHandlerService: ErroHandlerService,
               private confirmationService: ConfirmationService,
               private router: Router,

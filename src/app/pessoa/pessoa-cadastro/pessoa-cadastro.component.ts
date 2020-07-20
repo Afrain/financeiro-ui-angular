@@ -49,7 +49,7 @@ export class PessoaCadastroComponent implements OnInit {
     }
   }
 
-  confirmarPessoa(form: FormControl) {
+  confirmarPessoa(form: any) {
     this.pessoaService.salvarPessoa(this.pessoa)
       .subscribe(() => {
         this.messageService.add({
@@ -62,7 +62,7 @@ export class PessoaCadastroComponent implements OnInit {
       });
   }
 
-  editarPessoa(form: FormControl) {
+  editarPessoa(form: any) {
     this.pessoaService.editarPessoa(this.pessoa)
       .subscribe(response => {
         this.messageService.add({
@@ -87,7 +87,7 @@ export class PessoaCadastroComponent implements OnInit {
       });
   }
 
-  novo(form: FormControl) {
+  novo(form: any) {
     form.reset();
     this.pessoa = new Pessoa();
     this.router.navigate(['pessoas/novo']);

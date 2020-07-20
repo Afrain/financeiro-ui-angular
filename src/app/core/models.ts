@@ -8,6 +8,8 @@ export class Endereco {
   cep: string;
   cidade: string;
   estado: string;
+  numero: string;
+  complemento: string;
 }
 
 export class Pessoa {

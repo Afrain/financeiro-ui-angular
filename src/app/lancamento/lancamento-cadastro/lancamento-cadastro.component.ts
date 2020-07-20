@@ -7,8 +7,7 @@ import { Lancamento } from './../../core/models';
 import { ErroHandlerService } from './../../core/erro-handler.service';
 
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { ActivatedRoute, Routes, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
 

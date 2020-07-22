@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment.prod';
 import { AuthService } from './auth.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -7,10 +8,14 @@ import { Injectable } from '@angular/core';
 })
 export class LogoutService {
 
-tokensRevokeUrl = 'http://localhost:8080/tokens/revoke';
+tokensRevokeUrl: string;
 
   constructor(private http: HttpClient,
-              private authService: AuthService) { }
+              private authService: AuthService) {
+
+    this.tokensRevokeUrl = `${environment.apiUrl}/tokens/revoke`;
+
+  }
 
   async logout() {
     return this.http.delete(this.tokensRevokeUrl, { withCredentials: true })

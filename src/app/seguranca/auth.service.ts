@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment.prod';
 import { ErroHandlerService } from './../core/erro-handler.service';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -11,7 +12,7 @@ import * as jwt_decode from 'jwt-decode';
 })
 export class AuthService {
 
-  oauthTokenUrl = 'http://localhost:8080/oauth/token';
+  oauthTokenUrl: string;
 
   jwtPayload: any;
 
@@ -22,6 +23,7 @@ export class AuthService {
 
     this.carregaToken();
     this.getToken();
+    this.oauthTokenUrl = `${environment.apiUrl}/oauth/token`;
 
   }
 

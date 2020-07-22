@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment.prod';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -7,9 +8,11 @@ import { Injectable } from '@angular/core';
 })
 export class CategoriaService {
 
-  categoriaUrl = 'http://localhost:8080/categorias';
+  categoriaUrl: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.categoriaUrl = `${environment.apiUrl}/categorias`;
+   }
 
 
   listarTodasCategorias(): Observable<any> {
